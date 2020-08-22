@@ -1,26 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
+import useGlobal from "./store";
+
+const SearchForm = () => {
+  const [globalState, globalActions] = useGlobal();
+  const searchSubmit = (e) => {
+    e.preventDefault();
+    const username = e.target.username.value;
+    globalActions.github.getReposByUsername(username);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <form onSubmit={searchSubmit}>
+      <input name="username" placeholder="username" autoComplete="off" />
+      <button type="submit">Search</button>
+    </form>
+  );
+};
+
+const mapRepos = (repos) => {
+  return repos.map((repo) => (
+    <a
+      key={repo.id}
+      href={repo.html_url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <h3>{repo.name}</h3>
+    </a>
+  ));
+};
+
+const Results = () => {
+  const [globalState, globalActions] = useGlobal();
+  const { status, repos } = globalState;
+  return (
+    <>
+      {status === "LOADING" && <h4>Loading...</h4>}
+      {status === "SUCCESS" && mapRepos(repos)}
+      {status === "EMPTY" && <h4>This user have zero repos</h4>}
+      {status === "NOT_FOUND" && <h4>404 - User not found</h4>}
+      {status === "ERROR" && <h4>Connection Error</h4>}
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <div>
+      <SearchForm />
+      <Results />
     </div>
   );
-}
+};
 
 export default App;
