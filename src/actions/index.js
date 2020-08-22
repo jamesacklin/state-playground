@@ -1,4 +1,4 @@
-import * as github from './github'
-import * as setUser from './setUser'
+import * as github from './github';
+import * as setUser from './setUser';
 
-export { github, setUser }
+export { github, setUser };
