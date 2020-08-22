@@ -7,6 +7,7 @@ const SearchForm = () => {
   const searchSubmit = (e) => {
     e.preventDefault();
     const username = e.target.username.value;
+    globalActions.setUser.setActiveUser(username);
     globalActions.github.getReposByUsername(username);
   };
   return (
@@ -32,11 +33,11 @@ const mapRepos = (repos) => {
 
 const Results = () => {
   const [globalState, globalActions] = useGlobal();
-  const { status, repos } = globalState;
+  const { status, repos, currentUser } = globalState;
   return (
     <>
       {status === "LOADING" && <h4>Loading...</h4>}
-      {status === "SUCCESS" && mapRepos(repos)}
+      {status === "SUCCESS" && mapRepos(repos[currentUser])}
       {status === "EMPTY" && <h4>This user have zero repos</h4>}
       {status === "NOT_FOUND" && <h4>404 - User not found</h4>}
       {status === "ERROR" && <h4>Connection Error</h4>}
