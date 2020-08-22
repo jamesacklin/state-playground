@@ -1,1 +1,1 @@
-A quick test of [state management with React Hooks](https://medium.com/javascript-in-plain-english/state-management-with-react-hooks-no-redux-or-context-api-8b3035ceecf8) with an async request and [Immer](https://github.com/immerjs/immer).
+A quick test of [state management with React Hooks](https://medium.com/javascript-in-plain-english/state-management-with-react-hooks-no-redux-or-context-api-8b3035ceecf8) with an async request and [Immer](https://github.com/immerjs/immer) for immutable states.
